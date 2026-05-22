@@ -1,18 +1,14 @@
 import image1 from "../Assets/Gall1.png";
 import image2 from "../Assets/gall2.png";
 import image3 from "../Assets/gall3.png";
-//import Gallery4 from "../Assets/gall4.png";
-//import Gallery5 from "../Assets/gall5.png";
-//import Gallery6 from "../Assets/gall6.png";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import "../Styles/AboutUs.css";
 import Navbar from "../Components/Navbar";
 import hope from "../Assets/hope.png";
 import Team from "../Components/Team";
 import Testimonial from "../Components/Testimonial";
 import "../Styles/AboutUs.css";
-import { fetchgallery } from "../api/ApiService";
-
 
 const features = [
   {
@@ -22,20 +18,21 @@ const features = [
     points: [
       "Help us serve a meal, change a life",
       "Every donation brings us closer to a hunger-free community",
-      "Together, we can provide a home for all"
+      "Together, we can provide a home for all",
     ],
     icon: require("../Assets/houseicon.png"),
   },
-    {
-      title: "Make A Donation",
-      description: "Together, we can make a difference in the lives of those in need. Your donation will help support our mission to create a better world for all. Every contribution counts, no matter how big or small.",
-      points: [
-        "Be the change you wish to see in the world",
-        "Every donation brings us closer to a brighter future",
-        "Your generosity can change lives"
-      ],
-      icon: require("../Assets/dolldo.png") 
-    },
+  {
+    title: "Make A Donation",
+    description:
+      "Together, we can make a difference in the lives of those in need. Your donation will help support our mission to create a better world for all. Every contribution counts, no matter how big or small.",
+    points: [
+      "Be the change you wish to see in the world",
+      "Every donation brings us closer to a brighter future",
+      "Your generosity can change lives",
+    ],
+    icon: require("../Assets/dolldo.png"),
+  },
   {
     title: "Non Profit NGO",
     description:
@@ -43,25 +40,40 @@ const features = [
     points: [
       "Together, we can create a brighter future",
       "Every contribution counts in our mission to serve",
- 
-   
     ],
     icon: require("../Assets/shakeicon.png"),
   },
 ];
 
 const AboutUs = () => {
-  const [image, setImage] = useState([]);
+  const featuresRailRef = useRef(null);
 
   useEffect(() => {
-    fetchgallery()
-      .then((response) => {
-        console.log("Fetched data", response.data);
-        setImage(response.data);
-      })
-      .catch((error) => {
-        console.error("There was an error fetching images!", error);
-      });
+    const rail = featuresRailRef.current;
+
+    if (!rail) {
+      return undefined;
+    }
+
+    let animationFrameId;
+
+    const step = () => {
+      const maxScroll = rail.scrollWidth - rail.clientWidth;
+
+      if (maxScroll > 0) {
+        rail.scrollLeft += 0.3;
+
+        if (rail.scrollLeft >= maxScroll - 1) {
+          rail.scrollLeft = 0;
+        }
+      }
+
+      animationFrameId = window.requestAnimationFrame(step);
+    };
+
+    animationFrameId = window.requestAnimationFrame(step);
+
+    return () => window.cancelAnimationFrame(animationFrameId);
   }, []);
 
   return (
@@ -75,9 +87,18 @@ const AboutUs = () => {
 
       <div className="container">
         <div className="image-content">
-          <img src={image1} alt="Team Img 1" />
-          <img src={image2} alt="Team Img 2" />
-          <img src={image3} alt="Team Img 3" />
+          <img
+            src={image1}
+            alt="Team Img 1"
+          />
+          <img
+            src={image2}
+            alt="Team Img 2"
+          />
+          <img
+            src={image3}
+            alt="Team Img 3"
+          />
         </div>
         <div className="text-content">
           <h1>About Us</h1>
@@ -105,33 +126,40 @@ const AboutUs = () => {
           <div className="overlay">
             <ul className="overlay-text">
               Together, We're Going to Make The Future<br></br>
-              Children Where We Are Able To Fulfill All
-              
-                Their Requirements<br></br> To Keep
-                Them Safe From Withered World<b></b>
-             
-              
-                We <br></br>Have Already Stepped Out And 
-                Start Changing <br></br>The World
-              
-              Keeping Safe Them From War, Inhumanity
+              Children Where We Are Able To Fulfill All Their Requirements
+              <br></br> To Keep Them Safe From Withered World<b></b>
+              We <br></br>Have Already Stepped Out And Start Changing <br></br>
+              The World Keeping Safe Them From War, Inhumanity
             </ul>
           </div>
         </div>
       </div>
 
+      <div className="about-outreach-link">
+        <Link
+          to="/outreach"
+          className="about-outreach-link__button">
+          View the Outreach Page
+        </Link>
+      </div>
+
       <section className="features-section">
         <h2>Our Features</h2>
-        <div className="features-cards">
+        <div
+          className="features-cards"
+          ref={featuresRailRef}>
           {features.map((feature, index) => (
             <div
               key={index}
               className={`feature-card ${
                 index === 0 ? "feature-card-light" : "feature-card-light"
-              }`}
-            >
+              }`}>
               <div className="icon-wrapper">
-                <img src={feature.icon} alt={feature.title} className="icon" />
+                <img
+                  src={feature.icon}
+                  alt={feature.title}
+                  className="icon"
+                />
               </div>
               <h3>{feature.title}</h3>
               <p>{feature.description}</p>
@@ -144,20 +172,7 @@ const AboutUs = () => {
           ))}
         </div>
       </section>
-   
-      <section className="gallery-section">
-        <h2>Our Gallery</h2>
-        <div className="gallery-images">
-          {image.map((img, index) => (
-            <img
-              src={img.image}
-              key={index}
-              alt={`Gallery ${index}`}
-              className="Gallery1"
-            />
-          ))}
-        </div>
-      </section>
+
       <Testimonial />
     </div>
   );

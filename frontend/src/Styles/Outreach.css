@@ -1,0 +1,58 @@
+.outreach-page {
+  background: linear-gradient(180deg, #ffffff 0%, #faf8ff 100%);
+  color: #1b1f36;
+}
+
+.outreach-hero {
+  min-height: 56vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(109, 57, 216, 0.95), rgba(53, 17, 95, 0.9));
+  color: #fff;
+}
+
+.outreach-hero__content {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 4rem;
+  text-align: center;
+}
+
+.outreach-hero__tag {
+  display: inline-flex;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.outreach-hero h1 {
+  margin: 1rem 0 1rem;
+  font-size: clamp(2.4rem, 5vw, 4.8rem);
+}
+
+.outreach-hero p {
+  margin: 0 auto;
+  max-width: 760px;
+  line-height: 1.9;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.outreach-main {
+  padding: 4rem 1.5rem 5rem;
+}
+
+@media (max-width: 768px) {
+  .outreach-hero__content {
+    padding: 4rem 1rem 3rem;
+  }
+
+  .outreach-main {
+    padding: 3rem 1rem 4rem;
+  }
+}

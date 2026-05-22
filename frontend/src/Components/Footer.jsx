@@ -1,30 +1,50 @@
 // src/Footer.js
-import React from 'react';
-import '../Styles/Footer.css';
-import yosaIcon from '../Assets/yosa.png'; 
+import React from "react";
+import { Link } from "react-router-dom";
+import "../Styles/Footer.css";
+import yosaIcon from "../Assets/yosa.png";
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-section logo">
-          <img src={yosaIcon} alt="Yosa Logo" className="yosa-icon" />
+          <img
+            src={yosaIcon}
+            alt="Yosa Logo"
+            className="yosa-icon"
+          />
           <p>Youth Space Afrika</p>
           <p>Help make the world Better</p>
         </div>
         <div className="footer-section quick-link">
           <h3>Quick Link</h3>
           <ul>
-            <li>Home</li>
-            <li>About Us</li>
-            <li>Blog Post</li>
-            <li>Photo Gallery</li>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/about">About Us</Link>
+            </li>
+            <li>
+              <Link to="/outreach">Outreach</Link>
+            </li>
+            <li>
+              <Link to="/donate">Donate</Link>
+            </li>
           </ul>
         </div>
         <div className="footer-section get-in-touch">
           <h3>Get In Touch</h3>
           <ul>
-            <li>Contact Us</li>
-            <li>Our Services</li>
+            <li>
+              <Link to="/contact">Contact Us</Link>
+            </li>
+            <li>
+              <Link to="/volunteer">Volunteer</Link>
+            </li>
+            <li>
+              <Link to="/faq">FAQ</Link>
+            </li>
           </ul>
         </div>
         <div className="footer-section address">
@@ -35,7 +55,10 @@ const Footer = () => {
         </div>
         <div className="footer-section newsletter">
           <h3>Newsletter</h3>
-          <input type="email" placeholder="Enter Your Email" />
+          <input
+            type="email"
+            placeholder="Enter Your Email"
+          />
           <button type="button">Subscribe</button>
           <p>Your email is safe with us, we don't spam.</p>
           <div className="social-icons">

@@ -32,6 +32,17 @@
   color: #bbb;
 }
 
+.footer-section ul li a {
+  color: #bbb;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-section ul li a:hover {
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
 .footer-section .yosa-icon {
   width: 100px;
   margin-bottom: 20px;

@@ -22,206 +22,212 @@ const ContactUs = () => {
     e.preventDefault();
 
     const ContactData = {
-        first_name: formData.firstname,
-        last_name: formData.lastname,
-        email: formData.email,
-        phone_number: formData.phone,
-        message: formData.message,
+      first_name: formData.firstname,
+      last_name: formData.lastname,
+      email: formData.email,
+      phone_number: formData.phone,
+      message: formData.message,
     };
 
     try {
-        const response = await createContactUsMesasge(ContactData);
-        if (response.data.success) {
-            // Show an alert with the thank-you message
-            alert(response.data.message);
+      const response = await createContactUsMesasge(ContactData);
+      if (response.data.success) {
+        // Show an alert with the thank-you message
+        alert(response.data.message);
 
-            // Redirect to the homepage after submission
-            window.location.href = '/'; // Adjust this to your homepage route if necessary
-        } else {
-            // Show the error message returned from the server
-            alert(response.data.message);
-        }
+        // Redirect to the homepage after submission
+        window.location.href = "/"; // Adjust this to your homepage route if necessary
+      } else {
+        // Show the error message returned from the server
+        alert(response.data.message);
+      }
     } catch (error) {
-        console.log(error);
-        setMessage("Sorry, your message wasn't sent. Please try again later!");
+      console.log(error);
+      setMessage("Sorry, your message wasn't sent. Please try again later!");
     }
-};
-
-  
+  };
 
   return (
-    <div className="relative">
-      <div className="heading h-64 relative">
-        <img
-          src={require("../Assets/contactus.png")}
-          alt="Header"
-          className="h-64 w-full object-cover"
-        />
-        <h1
-          className="text-5xl text-center text-white p-4 rounded-md absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-          style={{ backgroundColor: "rgba(56, 2, 68, 0.4)" }}
-        >
-          Contact Us
-        </h1>
-
-        <div className="absolute top-0 left-0 right-0">
+    <div className="min-h-screen bg-[#f7f6fb] text-[#1b1f36]">
+      <header className="relative overflow-hidden bg-gradient-to-br from-[#35115f] via-[#6d39d8] to-[#c8ff59]">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.34),_transparent_35%)]" />
+        <div className="relative z-10">
           <Navbar />
         </div>
-      </div>
 
-      <div className="mx-6 md:mx-20">
+        <div className="relative z-10 mx-auto grid max-w-7xl gap-8 px-6 py-20 md:py-28 lg:grid-cols-[1.2fr_.8fr] lg:items-end">
+          <div className="rounded-[32px] border border-white/20 bg-white/12 p-8 text-white shadow-2xl backdrop-blur-xl md:p-10">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.28em] text-[#dbff88]">
+              Get In Touch
+            </p>
+            <h1 className="max-w-2xl text-4xl font-bold leading-tight md:text-6xl">
+              Send Me A Message
+            </h1>
+            <p className="mt-5 max-w-2xl text-base leading-8 text-white/82 md:text-lg">
+              We value your interest in our mission and would love to hear from
+              you. Whether you have questions, want to get involved, or simply
+              wish to learn more about our work, please reach out.
+            </p>
+          </div>
+
+          <div className="rounded-[32px] border border-white/20 bg-white/90 p-6 text-[#1b1f36] shadow-2xl backdrop-blur-xl md:p-8">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#6d39d8]">
+              Quick Contact
+            </p>
+            <div className="mt-6 space-y-4 text-sm leading-7 text-[#4b4f69]">
+              <p>
+                <span className="font-bold text-[#1b1f36]">Location: </span>
+                Dansoman, Asoredanho
+              </p>
+              <p>
+                <span className="font-bold text-[#1b1f36]">Phone: </span>
+                +233 201012589
+              </p>
+              <p>
+                <span className="font-bold text-[#1b1f36]">Email: </span>
+                youthspaceafrika@gmail.com
+              </p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main className="mx-auto max-w-7xl px-6 py-14 md:py-20">
         {message && (
-          <div className="bg-green-100 text-green-700 p-4 rounded-md mb-4">
+          <div className="mb-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-700 shadow-sm">
             {message}
           </div>
         )}
-        <p className="text-lg font-bold mt-5">Get In Touch</p>
-        <h2 className="text-3xl font-bold">Send Me A Message</h2>
-      </div>
 
-      <div className="flex h-full mt-5 flex-col sm:flex-row md:flex-row gap-5 gap-x-10 align-center justify-center px-2 md:mx-20">
-        <div className="sm:w-2/3 h-full w-full p-2">
-          <form onSubmit={handleSubmit}>
-            <div name="name-section" className="flex gap-2 gap-x-10 flex-row">
-              <div name="first-name" className="w-1/2 flex flex-col ml-1">
-                <label htmlFor="first-name">First Name</label>
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_.9fr]">
+          <form
+            onSubmit={handleSubmit}
+            className="rounded-[32px] bg-white p-6 shadow-[0_22px_65px_rgba(27,31,54,0.08)] ring-1 ring-black/5 md:p-8">
+            <div className="grid gap-5 md:grid-cols-2">
+              <label className="block">
+                <span className="mb-2 block text-sm font-semibold text-[#1b1f36]">
+                  First Name
+                </span>
                 <input
                   type="text"
                   name="firstname"
                   id="first-name"
                   value={formData.firstname}
                   onChange={handleChange}
-                  className="bg-green-50 placeholder:p-2 w-full h-10"
+                  className="w-full rounded-2xl border border-[#e7e2f4] bg-[#f8f7fc] px-4 py-3 outline-none transition focus:border-[#6d39d8] focus:bg-white"
                   placeholder="First Name"
                 />
-              </div>
+              </label>
 
-              <div name="last-name" className="w-1/2 flex flex-col mr-1">
-                <label htmlFor="last-name">Last Name</label>
+              <label className="block">
+                <span className="mb-2 block text-sm font-semibold text-[#1b1f36]">
+                  Last Name
+                </span>
                 <input
                   type="text"
                   name="lastname"
                   id="last-name"
                   value={formData.lastname}
                   onChange={handleChange}
-                  className="w-full placeholder:p-2 bg-green-50 h-10"
+                  className="w-full rounded-2xl border border-[#e7e2f4] bg-[#f8f7fc] px-4 py-3 outline-none transition focus:border-[#6d39d8] focus:bg-white"
                   placeholder="Last Name"
                 />
-              </div>
-            </div>
+              </label>
 
-            <div
-              name="mail-phone-section"
-              className="flex gap-2 gap-x-10 flex-row mt-5"
-            >
-              <div name="mail-section" className="w-1/2 flex flex-col ml-1">
-                <label htmlFor="mail">Email</label>
+              <label className="block">
+                <span className="mb-2 block text-sm font-semibold text-[#1b1f36]">
+                  Email
+                </span>
                 <input
-                  type="text"
+                  type="email"
                   name="email"
                   id="mail"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full bg-green-50 placeholder:p-2 h-10"
+                  className="w-full rounded-2xl border border-[#e7e2f4] bg-[#f8f7fc] px-4 py-3 outline-none transition focus:border-[#6d39d8] focus:bg-white"
                   placeholder="Email"
                 />
-              </div>
+              </label>
 
-              <div name="phone-section" className="w-1/2 flex flex-col mr-1">
-                <label htmlFor="phone">Phone</label>
+              <label className="block">
+                <span className="mb-2 block text-sm font-semibold text-[#1b1f36]">
+                  Phone
+                </span>
                 <input
                   type="text"
                   name="phone"
                   id="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full bg-green-50 placeholder:p-2 h-10"
+                  className="w-full rounded-2xl border border-[#e7e2f4] bg-[#f8f7fc] px-4 py-3 outline-none transition focus:border-[#6d39d8] focus:bg-white"
                   placeholder="+088"
                 />
-              </div>
+              </label>
             </div>
 
-            <div
-              name="message-section"
-              className="w-full flex flex-col mr-1 p-1 mt-5"
-            >
-              <label htmlFor="message">Message</label>
+            <label className="mt-5 block">
+              <span className="mb-2 block text-sm font-semibold text-[#1b1f36]">
+                Message
+              </span>
               <textarea
                 name="message"
                 id="message"
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full bg-green-50 placeholder:p-2 h-40"
+                className="min-h-44 w-full rounded-3xl border border-[#e7e2f4] bg-[#f8f7fc] px-4 py-3 outline-none transition focus:border-[#6d39d8] focus:bg-white"
                 placeholder="Message"
               />
-            </div>
+            </label>
 
-            <div name="button-section" className="p-1 mt-5">
-              <button className="bg-slate-950 text-white p-2 hover:bg-white hover:text-slate-950 hover:border-slate-500 hover:border-2 h-10 hover:rounded-2xl">
-                Send Message
-              </button>
-            </div>
+            <button className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-[#35115f] px-8 text-sm font-semibold text-white transition hover:bg-[#6d39d8]">
+              Send Message
+            </button>
           </form>
-        </div>
 
-        <div className="sm:w-1/3 h-full w-full bg-green-50 p-4">
-          <h1 className="text-3xl font-bold mb-4">Address</h1>
+          <aside className="space-y-6">
+            <div className="rounded-[32px] bg-[#eefbf0] p-6 shadow-[0_22px_65px_rgba(27,31,54,0.06)] ring-1 ring-[#cde8d2] md:p-8">
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#6d39d8]">
+                Address
+              </p>
+              <h2 className="mt-3 text-3xl font-bold text-[#1b1f36]">
+                Our Office
+              </h2>
+              <p className="mt-4 leading-8 text-[#4b4f69]">
+                We are always open to conversations, collaboration, and ideas
+                that strengthen our work and the communities we serve.
+              </p>
+              <div className="mt-6 space-y-3 text-[#1b1f36]">
+                <p>
+                  <span className="font-bold">Location: </span>
+                  Dansoman, Asoredanho
+                </p>
+                <p>
+                  <span className="font-bold">Phone: </span>
+                  +233 201012589
+                </p>
+                <p>
+                  <span className="font-bold">Email: </span>
+                  youthspaceafrika@gmail.com
+                </p>
+              </div>
+            </div>
 
-          <p className="mb-4">
-            We value your interest in our mission and would love to hear from
-            you! <br />
-            Whether you have questions, want to get involved, or simply wish to
-            learn more about our work, please feel free to reach out.
-          </p>
-
-          <p>
-            <span className="font-bold">Location: </span>
-            Dansoman, Asoredanho
-          </p>
-          <p>
-            <span className="font-bold">Phone: </span>
-            +233 201012589
-          </p>
-          <p>
-            <span className="font-bold">Email: </span>
-            youthspaceafrika@gmail.com
-          </p>
+            <div className="grid grid-cols-2 gap-4 rounded-[32px] bg-white p-4 shadow-[0_22px_65px_rgba(27,31,54,0.06)] ring-1 ring-black/5">
+              {["client1", "client2", "client3", "client4"].map((client) => (
+                <div
+                  key={client}
+                  className="flex min-h-24 items-center justify-center rounded-2xl bg-[#f8f7fc] p-4">
+                  <img
+                    src={require(`../Assets/${client}.png`)}
+                    alt={client}
+                    className="max-h-16 object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          </aside>
         </div>
-      </div>
-
-      <div
-        name="sponsors-logos"
-        className="flex flex-row justify-between items-center h-32 mt-10 mb-20 md:mx-20"
-      >
-        <div className="w-1/4 h-full flex justify-center bg-white">
-          <img
-            src={require("../Assets/client1.png")}
-            alt="sponsor1"
-            className="h-full object-contain"
-          />
-        </div>
-        <div className="w-1/4 h-full flex justify-center bg-white">
-          <img
-            src={require("../Assets/client2.png")}
-            alt="sponsor2"
-            className="h-full object-contain"
-          />
-        </div>
-        <div className="w-1/4 h-full flex justify-center bg-white">
-          <img
-            src={require("../Assets/client3.png")}
-            alt="sponsor3"
-            className="h-full object-contain"
-          />
-        </div>
-        <div className="w-1/4 h-full flex justify-center bg-white">
-          <img
-            src={require("../Assets/client4.png")}
-            alt="sponsor4"
-            className="h-full object-contain"
-          />
-        </div>
-      </div>
+      </main>
     </div>
   );
 };
