@@ -101,7 +101,7 @@ const ContactUs = () => {
             <div className="grid gap-5 md:grid-cols-2">
               <label className="block">
                 <span className="mb-2 block text-sm font-semibold text-[#1b1f36]">
-                  First Name
+                  First Name <span style={{ color: "#ef4444" }}>*</span>
                 </span>
                 <input
                   type="text"
@@ -111,12 +111,15 @@ const ContactUs = () => {
                   onChange={handleChange}
                   className="w-full rounded-2xl border border-[#e7e2f4] bg-[#f8f7fc] px-4 py-3 outline-none transition focus:border-[#6d39d8] focus:bg-white"
                   placeholder="First Name"
+                  required
+                  pattern="[A-Za-z\s\-']{2,}"
+                  title="Please enter a valid first name (letters only, min 2 characters)"
                 />
               </label>
 
               <label className="block">
                 <span className="mb-2 block text-sm font-semibold text-[#1b1f36]">
-                  Last Name
+                  Last Name <span style={{ color: "#ef4444" }}>*</span>
                 </span>
                 <input
                   type="text"
@@ -126,12 +129,15 @@ const ContactUs = () => {
                   onChange={handleChange}
                   className="w-full rounded-2xl border border-[#e7e2f4] bg-[#f8f7fc] px-4 py-3 outline-none transition focus:border-[#6d39d8] focus:bg-white"
                   placeholder="Last Name"
+                  required
+                  pattern="[A-Za-z\s\-']{2,}"
+                  title="Please enter a valid last name (letters only, min 2 characters)"
                 />
               </label>
 
               <label className="block">
                 <span className="mb-2 block text-sm font-semibold text-[#1b1f36]">
-                  Email
+                  Email <span style={{ color: "#ef4444" }}>*</span>
                 </span>
                 <input
                   type="email"
@@ -141,6 +147,8 @@ const ContactUs = () => {
                   onChange={handleChange}
                   className="w-full rounded-2xl border border-[#e7e2f4] bg-[#f8f7fc] px-4 py-3 outline-none transition focus:border-[#6d39d8] focus:bg-white"
                   placeholder="Email"
+                  required
+                  title="Please enter a valid email address"
                 />
               </label>
 
@@ -162,7 +170,7 @@ const ContactUs = () => {
 
             <label className="mt-5 block">
               <span className="mb-2 block text-sm font-semibold text-[#1b1f36]">
-                Message
+                Message <span style={{ color: "#ef4444" }}>*</span>
               </span>
               <textarea
                 name="message"
@@ -171,6 +179,9 @@ const ContactUs = () => {
                 onChange={handleChange}
                 className="min-h-44 w-full rounded-3xl border border-[#e7e2f4] bg-[#f8f7fc] px-4 py-3 outline-none transition focus:border-[#6d39d8] focus:bg-white"
                 placeholder="Message"
+                required
+                minLength={10}
+                title="Please enter a message (at least 10 characters)"
               />
             </label>
 

@@ -80,6 +80,7 @@ MANIFEST
 *.manifest
 *.spec
 CLAUDE.md
+.claude/
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt

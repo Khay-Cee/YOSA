@@ -65,11 +65,12 @@ const DonateInner = () => {
     if (paymentRef && openPaystack.current) {
       openPaystack.current = false;
       initializePayment({
-        onSuccess: (ref) => {
-          // fire-and-forget verify; navigate either way
-          axios
-            .get(`http://localhost:8000/verify-payment/?reference=${ref.reference}`)
-            .catch(() => {});
+        onSuccess: async (ref) => {
+          try {
+            await axios.get(`http://localhost:8000/verify-payment/?reference=${ref.reference}`);
+          } catch (_) {
+            // navigate regardless of verify outcome
+          }
           const base = `/thank-you?type=donation&donationType=Money`;
           window.location.href = causeName
             ? `${base}&causeName=${encodeURIComponent(causeName)}`

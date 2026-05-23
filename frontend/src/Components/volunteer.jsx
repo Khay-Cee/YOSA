@@ -13,6 +13,8 @@ import { createVolunteer } from "../api/ApiService";
 import Navbar from "./Navbar";
 import "../Styles/volunteer.css";
 
+const Req = () => <span style={{ color: "#ef4444", marginLeft: "2px" }} aria-hidden="true"> *</span>;
+
 const Volunteer = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -83,7 +85,7 @@ const Volunteer = () => {
 
               <div className="vol-row">
                 <div className="vol-field">
-                  <label htmlFor="firstName">First Name</label>
+                  <label htmlFor="firstName">First Name<Req /></label>
                   <div className="vol-input-wrap">
                     <FiUser className="vol-icon" />
                     <input
@@ -94,12 +96,14 @@ const Volunteer = () => {
                       onChange={handleChange}
                       placeholder="First name"
                       required
+                      pattern="[A-Za-z\s\-']{2,}"
+                      title="Please enter a valid first name (letters only, min 2 characters)"
                     />
                   </div>
                 </div>
 
                 <div className="vol-field">
-                  <label htmlFor="lastName">Last Name</label>
+                  <label htmlFor="lastName">Last Name<Req /></label>
                   <div className="vol-input-wrap">
                     <FiUser className="vol-icon" />
                     <input
@@ -110,13 +114,15 @@ const Volunteer = () => {
                       onChange={handleChange}
                       placeholder="Last name"
                       required
+                      pattern="[A-Za-z\s\-']{2,}"
+                      title="Please enter a valid last name (letters only, min 2 characters)"
                     />
                   </div>
                 </div>
               </div>
 
               <div className="vol-field">
-                <label htmlFor="email">Email Address</label>
+                <label htmlFor="email">Email Address<Req /></label>
                 <div className="vol-input-wrap">
                   <FiMail className="vol-icon" />
                   <input
@@ -127,12 +133,13 @@ const Volunteer = () => {
                     onChange={handleChange}
                     placeholder="you@example.com"
                     required
+                    title="Please enter a valid email address"
                   />
                 </div>
               </div>
 
               <div className="vol-field">
-                <label htmlFor="gender">Gender</label>
+                <label htmlFor="gender">Gender<Req /></label>
                 <select
                   id="gender"
                   name="gender"
