@@ -35,6 +35,38 @@ class ContactUs(models.Model):
     
        
 
+class Newsletter(models.Model):
+    email = models.EmailField(unique=True)
+    subscribed_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email
+
+
+class Cause(models.Model):
+    CATEGORY_CHOICES = [
+        ('Medical', 'Medical'),
+        ('Homeless', 'Homeless'),
+        ('Education', 'Education'),
+        ('Food', 'Food'),
+    ]
+    name = models.CharField(max_length=100)
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+    description = models.TextField()
+    goal = models.DecimalField(max_digits=12, decimal_places=2, default=10000)
+    raised = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    is_active = models.BooleanField(default=True)
+
+    @property
+    def progress_percent(self):
+        if self.goal > 0:
+            return min(100, round(float(self.raised) / float(self.goal) * 100, 1))
+        return 0
+
+    def __str__(self):
+        return self.name
+
+
 class Donation(models.Model):
     DONATION_TYPES = [
         ('Money', 'Money'),
@@ -44,11 +76,12 @@ class Donation(models.Model):
     id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=30, null=False)
     last_name = models.CharField(max_length=30, null=False)
-    email_address = models.EmailField(max_length=30, null=False)
+    email_address = models.EmailField(max_length=254, null=False)
     donation_type = models.CharField(max_length=10, choices=DONATION_TYPES)
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0, null=False)
     verified = models.BooleanField(default=False)
     reference = models.CharField(max_length=100, unique=True, default="YOSA")
+    cause = models.ForeignKey(Cause, null=True, blank=True, on_delete=models.SET_NULL, related_name='donations')
 
 
     
@@ -95,4 +128,10 @@ class VolunteerAdmin(admin.ModelAdmin):
     search_fields = ("email", "last_name", "first_name")
 
 class DonationAdmin(admin.ModelAdmin):
-    list_display =("last_name", "first_name", "donation_type")
+    list_display = ("last_name", "first_name", "donation_type", "cause", "amount", "verified")
+
+class CauseAdmin(admin.ModelAdmin):
+    list_display = ("name", "category", "raised", "goal", "is_active")
+
+class NewsletterAdmin(admin.ModelAdmin):
+    list_display = ("email", "subscribed_at")

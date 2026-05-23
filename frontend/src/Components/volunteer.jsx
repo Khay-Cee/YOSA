@@ -1,150 +1,211 @@
 import React, { useState } from "react";
-import volunteer from "../Assets/volunteer.jpg";
-import headerImage from "../Assets/volunteer1.png"; // Add the path to your background image
-import "../Styles/volunteer.css";
+import { useNavigate } from "react-router-dom";
+import {
+  FiUser,
+  FiMail,
+  FiArrowRight,
+  FiCheck,
+  FiAlertCircle,
+  FiLoader,
+} from "react-icons/fi";
+// FiCheck is used in the sidebar benefit list
 import { createVolunteer } from "../api/ApiService";
-import Navbar from "./Navbar"; // Import the Navbar component
+import Navbar from "./Navbar";
+import "../Styles/volunteer.css";
 
-const RegistrationForm = () => {
+const Volunteer = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     gender: "",
   });
-
-  const [message, setMessage] = useState("");
+  const [submitStatus, setSubmitStatus] = useState("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const VolunteerData = {
-      first_name: formData.firstName,
-      last_name: formData.lastName,
-      email_address: formData.email,
-      gender: formData.gender,
-    };
+    setSubmitStatus("loading");
+    setErrorMsg("");
 
     try {
-      const response = await createVolunteer(VolunteerData);
-      console.log("Volunteer registered successfully:", response.data);
-      setMessage("Thank you for volunteering to YOSA");
-
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        gender: "",
+      await createVolunteer({
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email_address: formData.email,
+        gender: formData.gender,
       });
+      navigate("/thank-you?type=volunteer");
     } catch (error) {
-      if (error.response) {
-        if (error.response.status === 400) {
-          setMessage("Sorry, the email has already been used. Please try again!");
-        } else {
-          setMessage("There was an error registering volunteer!");
-        }
+      setSubmitStatus("error");
+      if (error.response?.status === 400) {
+        setErrorMsg("This email address is already registered as a volunteer.");
       } else if (error.request) {
-        setMessage("Server is not responding. Please try again later.");
+        setErrorMsg("Unable to connect to the server. Please check your connection and try again.");
       } else {
-        setMessage("An unexpected error occurred. Please try again.");
+        setErrorMsg("An unexpected error occurred. Please try again.");
       }
-      console.log("There was an error registering volunteer!", error);
     }
   };
 
   return (
-    <div>
-      {/* Navbar Component */}
+    <div className="vol-page">
       <Navbar />
 
-      {/* Header Section */}
-      <header className="header-section">
-        <img src={headerImage} alt="Header Background" className="header-image" />
-        <div className="header-overlay">
-          <h1>Register to Volunteer</h1>
-          <p>Join us in making a difference!</p>
+      <header className="vol-hero">
+        <div className="vol-hero-inner">
+          <span className="vol-badge">Join Our Community</span>
+          <h1>Become a Volunteer</h1>
+          <p>
+            Make a lasting difference. Join YOSA and help build stronger,
+            more empowered communities across Ghana through mentorship,
+            advocacy, and community-driven action.
+          </p>
         </div>
       </header>
 
-      {/* Registration Form */}
-      <div className="registration-container">
-        <div className="image-section">
-          <img src={volunteer} alt="Fashion Collection 2018" className="image" />
-          <p className="image-caption">#Collection 2018</p>
-        </div>
-        <div className="form-section">
-          <h2 className="form-title">REGISTER TO VOLUNTEER WITH US</h2>
-          <form onSubmit={handleSubmit} className="registration-form">
-            {message && <p className="form-message">{message}</p>}
-            <div className="form-row">
-              <div className="form-group">
-                <label className="form-label">First Name</label>
-                <input
-                  type="text"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  className="form-input"
-                  required
-                />
+      <section className="vol-body">
+        <div className="vol-form-wrap">
+          <form className="vol-form" onSubmit={handleSubmit} noValidate>
+              <h2 className="vol-form-title">Personal Information</h2>
+
+              {submitStatus === "error" && (
+                <div className="vol-error-banner" role="alert">
+                  <FiAlertCircle size={18} />
+                  <span>{errorMsg}</span>
+                </div>
+              )}
+
+              <div className="vol-row">
+                <div className="vol-field">
+                  <label htmlFor="firstName">First Name</label>
+                  <div className="vol-input-wrap">
+                    <FiUser className="vol-icon" />
+                    <input
+                      id="firstName"
+                      type="text"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      placeholder="First name"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="vol-field">
+                  <label htmlFor="lastName">Last Name</label>
+                  <div className="vol-input-wrap">
+                    <FiUser className="vol-icon" />
+                    <input
+                      id="lastName"
+                      type="text"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      placeholder="Last name"
+                      required
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="form-group">
-                <label className="form-label">Last Name</label>
-                <input
-                  type="text"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  className="form-input"
-                  required
-                />
+
+              <div className="vol-field">
+                <label htmlFor="email">Email Address</label>
+                <div className="vol-input-wrap">
+                  <FiMail className="vol-icon" />
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="you@example.com"
+                    required
+                  />
+                </div>
               </div>
-            </div>
-            <div className="form-group">
-              <label className="form-label">Email Address</label>
-              <div className="form-input-wrapper">
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
+
+              <div className="vol-field">
+                <label htmlFor="gender">Gender</label>
+                <select
+                  id="gender"
+                  name="gender"
+                  value={formData.gender}
                   onChange={handleChange}
-                  className="form-input"
                   required
-                />
-                <span className="input-icon">✉️</span>
+                  className="vol-select"
+                >
+                  <option value="">Select gender</option>
+                  <option value="M">Male</option>
+                  <option value="F">Female</option>
+                  <option value="O">Prefer not to say</option>
+                </select>
               </div>
-            </div>
-            <div className="form-group">
-              <label className="form-label">Gender</label>
-              <select
-                name="gender"
-                value={formData.gender}
-                onChange={handleChange}
-                className="form-input"
-                required
+
+              <button
+                type="submit"
+                className="vol-btn"
+                disabled={submitStatus === "loading"}
               >
-                <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <button type="submit" className="submit-button">
-              Register <span className="button-icon">➡️</span>
-            </button>
-          </form>
+                {submitStatus === "loading" ? (
+                  <>
+                    <FiLoader className="vol-spin" size={18} />
+                    Submitting...
+                  </>
+                ) : (
+                  <>
+                    Register Now
+                    <FiArrowRight size={18} />
+                  </>
+                )}
+              </button>
+            </form>
         </div>
-      </div>
+
+        <aside className="vol-sidebar">
+          <div className="vol-info-card">
+            <h3>Why Volunteer with YOSA?</h3>
+            <ul className="vol-benefit-list">
+              <li>
+                <FiCheck className="vol-check" />
+                Build leadership and professional skills
+              </li>
+              <li>
+                <FiCheck className="vol-check" />
+                Contribute to sustainable community development
+              </li>
+              <li>
+                <FiCheck className="vol-check" />
+                Connect with motivated young change-makers
+              </li>
+              <li>
+                <FiCheck className="vol-check" />
+                Make a measurable impact in people's lives
+              </li>
+              <li>
+                <FiCheck className="vol-check" />
+                Gain mentorship from experienced community leaders
+              </li>
+            </ul>
+          </div>
+
+          <div className="vol-contact-card">
+            <h4>Questions?</h4>
+            <p>Reach us at</p>
+            <a href="mailto:youthspaceafrika@gmail.com">
+              youthspaceafrika@gmail.com
+            </a>
+          </div>
+        </aside>
+      </section>
     </div>
   );
 };
 
-export default RegistrationForm;
+export default Volunteer;

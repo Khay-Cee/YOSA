@@ -36,11 +36,10 @@ html {
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) minmax(150px, 0.42fr);
+  grid-template-columns: 1fr;
   gap: 14px;
   align-items: stretch;
-  min-height: calc(100vh - 92px);
-  max-width: 1480px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -48,17 +47,17 @@ html {
   border-radius: 0;
   overflow: hidden;
   position: relative;
-  min-height: 560px;
+  min-height: 0;
   box-shadow: 0 18px 40px rgba(34, 23, 67, 0.12);
 }
 
 .hero-panel--intro {
-  padding: clamp(24px, 3vw, 44px);
+  padding: 80px clamp(24px, 4vw, 48px) clamp(32px, 4vw, 48px);
   color: var(--yosa-ink);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 16px;
+  gap: 20px;
   background: #ffffff;
   border: 1px solid rgba(27, 31, 54, 0.08);
 }
@@ -81,17 +80,17 @@ html {
 
 .hero-panel--intro h1 {
   margin: 0;
-  font-size: clamp(2.6rem, 5vw, 5rem);
+  font-size: clamp(2.8rem, 7vw, 4.8rem);
   line-height: 0.96;
-  max-width: 12ch;
+  max-width: 14ch;
   color: #111;
 }
 
 .hero-panel--intro p {
   margin: 0;
   max-width: 620px;
-  font-size: clamp(1rem, 1.2vw, 1.2rem);
-  line-height: 1.75;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 1.8;
   color: #111;
 }
 
@@ -178,6 +177,7 @@ html {
   align-items: stretch;
   justify-content: center;
   padding: 10px 8px;
+  min-height: 120px;
 }
 
 .values-label {
@@ -203,9 +203,10 @@ html {
 
 .values-track {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 14px;
-  animation: valueScroll 9s linear infinite;
+  width: max-content;
+  animation: valuesScrollHorizontal 9s linear infinite;
 }
 
 .value-pill {
@@ -424,29 +425,6 @@ html {
 }
 
 @media (max-width: 1180px) {
-  .hero-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-panel {
-    min-height: 0;
-  }
-
-  .gallery-slide {
-    width: 180px;
-    height: 420px;
-    flex-basis: 180px;
-  }
-
-  .hero-panel--values {
-    min-height: 120px;
-  }
-
-  .values-track {
-    flex-direction: row;
-    animation: valuesScrollHorizontal 9s linear infinite;
-  }
-
   .support-section {
     grid-template-columns: 1fr;
   }
@@ -462,10 +440,6 @@ html {
 }
 
 @media (max-width: 768px) {
-  .hero {
-    padding-top: 10px;
-  }
-
   .hero-buttons {
     width: 100%;
   }

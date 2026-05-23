@@ -9,15 +9,13 @@ import chat from "../Assets/chatwithus.png";
 const FAQ = () => {
   return (
     <div className="bg-[#f7f6fb] text-[#1b1f36]">
+      <Navbar />
       <header className="relative overflow-hidden bg-gradient-to-br from-[#35115f] via-[#6d39d8] to-[#c8ff59]">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-20"
           style={{ backgroundImage: `url(${FAQimg})` }}
         />
         <div className="absolute inset-0 bg-[#170f27]/35" />
-        <div className="relative z-10">
-          <Navbar />
-        </div>
         <div className="relative z-10 mx-auto flex min-h-64 max-w-7xl items-center justify-center px-6 py-20 text-center md:py-28">
           <div className="max-w-3xl rounded-[32px] border border-white/20 bg-white/12 p-8 text-white shadow-2xl backdrop-blur-xl md:p-10">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.28em] text-[#dbff88]">

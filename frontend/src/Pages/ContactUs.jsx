@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar.jsx";
 import "../Styles/tailwind.css";
 import { createContactUsMesasge } from "../api/ApiService.js";
 
 const ContactUs = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -12,7 +14,7 @@ const ContactUs = () => {
     message: "",
   });
 
-  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,28 +34,21 @@ const ContactUs = () => {
     try {
       const response = await createContactUsMesasge(ContactData);
       if (response.data.success) {
-        // Show an alert with the thank-you message
-        alert(response.data.message);
-
-        // Redirect to the homepage after submission
-        window.location.href = "/"; // Adjust this to your homepage route if necessary
+        navigate("/thank-you?type=contact");
       } else {
-        // Show the error message returned from the server
-        alert(response.data.message);
+        setErrorMessage(response.data.message || "Something went wrong. Please try again.");
       }
     } catch (error) {
       console.log(error);
-      setMessage("Sorry, your message wasn't sent. Please try again later!");
+      setErrorMessage("Sorry, your message wasn't sent. Please try again later.");
     }
   };
 
   return (
     <div className="min-h-screen bg-[#f7f6fb] text-[#1b1f36]">
+      <Navbar />
       <header className="relative overflow-hidden bg-gradient-to-br from-[#35115f] via-[#6d39d8] to-[#c8ff59]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.34),_transparent_35%)]" />
-        <div className="relative z-10">
-          <Navbar />
-        </div>
 
         <div className="relative z-10 mx-auto grid max-w-7xl gap-8 px-6 py-20 md:py-28 lg:grid-cols-[1.2fr_.8fr] lg:items-end">
           <div className="rounded-[32px] border border-white/20 bg-white/12 p-8 text-white shadow-2xl backdrop-blur-xl md:p-10">
@@ -93,9 +88,9 @@ const ContactUs = () => {
       </header>
 
       <main className="mx-auto max-w-7xl px-6 py-14 md:py-20">
-        {message && (
-          <div className="mb-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-700 shadow-sm">
-            {message}
+        {errorMessage && (
+          <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-red-700 shadow-sm">
+            {errorMessage}
           </div>
         )}
 
