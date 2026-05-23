@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(\"c:\\\\Users\\\\hp\\\\OneDrive\\\\Desktop\\\\projects\\\\YOSA\\\\backend\\\\venv\\\\Scripts\\\\python.exe\" manage.py makemigrations)"
-    ]
-  }
-}
